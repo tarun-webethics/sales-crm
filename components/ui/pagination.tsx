@@ -51,7 +51,7 @@ const PaginationLink = ({
         variant: isActive ? "default" : "outline",
         size,
       }),
-      isActive && "bg-[#14A800] text-white hover:bg-[#108A00]",
+      isActive && "bg-[#2563eb] text-white hover:bg-[#1d4ed8]",
       className
     )}
     {...props}
@@ -100,7 +100,7 @@ const PaginationEllipsis = ({
     className={cn("flex h-8 w-8 items-center justify-center", className)}
     {...props}
   >
-    <MoreHorizontal className="h-4 w-4 text-[#6B7280]" />
+    <MoreHorizontal className="h-4 w-4 text-black" />
     <span className="sr-only">More pages</span>
   </span>
 );

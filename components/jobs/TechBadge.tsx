@@ -9,7 +9,7 @@ interface TechBadgeProps {
 export function TechBadge({ technology, className }: TechBadgeProps) {
   const techLower = technology.toLowerCase().trim();
 
-  let colorClasses = 'bg-[#F3F4F6] text-[#4B5563] border-[#E5E7EB]';
+  let colorClasses = 'bg-[#F1F5F9] text-[#000000] border-[#CBD5E1] font-medium';
 
   if (techLower.includes('shopify plus')) {
     colorClasses = 'bg-[#FFF7ED] text-[#C2410C] border-[#FED7AA]';

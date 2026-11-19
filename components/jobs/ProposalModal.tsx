@@ -281,17 +281,17 @@ Best,
         {/* 1. TOP HEADER */}
         <div className="px-6 pt-5 pb-3 bg-white relative shrink-0">
           <div className="pr-8">
-            <h2 className="text-lg font-bold text-[#111827] tracking-tight">
+            <h2 className="text-lg font-bold text-[#0F172A] tracking-tight">
               Generate proposal
             </h2>
-            <p className="text-xs text-[#6B7280] truncate mt-0.5" title={job.title}>
+            <p className="text-xs text-[#334155] font-medium truncate mt-0.5" title={job.title}>
               {job.title}
             </p>
           </div>
         </div>
 
         {/* TABS */}
-        <div className="px-6 border-b border-[#E5E7EB] bg-white relative shrink-0">
+        <div className="px-6 border-b border-[#CBD5E1] bg-white relative shrink-0">
           <div className="flex items-center gap-6">
             {/* Tab 1: Cover letter */}
             <button
@@ -300,8 +300,8 @@ Best,
               className={cn(
                 'inline-flex items-center gap-2 pb-3 pt-3 text-xs font-medium cursor-pointer transition-colors relative border-b-2 -mb-[1px]',
                 activeTab === 'cover-letter'
-                  ? 'border-[#14A800] text-[#14A800] font-semibold'
-                  : 'border-transparent text-[#6B7280] hover:text-[#111827]'
+                  ? 'border-[#2563eb] text-[#2563eb]'
+                  : 'border-transparent text-[#334155] hover:text-[#0F172A]'
               )}
             >
               <FileText className="h-3.5 w-3.5" />
@@ -315,8 +315,8 @@ Best,
               className={cn(
                 'inline-flex items-center gap-1.5 pb-3 pt-3 text-xs font-medium cursor-pointer transition-colors relative border-b-2 -mb-[1px]',
                 activeTab === 'share-document'
-                  ? 'border-[#14A800] text-[#14A800] font-semibold'
-                  : 'border-transparent text-[#6B7280] hover:text-[#111827]'
+                  ? 'border-[#2563eb] text-[#2563eb]'
+                  : 'border-transparent text-[#334155] hover:text-[#0F172A]'
               )}
             >
               <Link2 className="h-3.5 w-3.5" />
@@ -325,8 +325,8 @@ Best,
                 className={cn(
                   'px-1.5 py-0.2 rounded-full text-[10px] font-bold leading-tight transition-colors',
                   activeTab === 'share-document'
-                    ? 'bg-[#14A800] text-white'
-                    : 'bg-[#F3F4F6] text-[#4B5563]'
+                    ? 'bg-[#2563eb] text-white'
+                    : 'bg-[#F1F5F9] text-[#000000]'
                 )}
               >
                 {links.length}
@@ -337,12 +337,12 @@ Best,
 
         {/* NOTIFICATION TOAST BAR */}
         {notification && (
-          <div className="bg-[#F1FAF0] border-b border-[#BEE8B8] px-6 py-2 text-xs font-medium text-[#108A00] flex items-center justify-between animate-in fade-in duration-200">
+          <div className="bg-[#EFF6FF] border-b border-[#BFDBFE] px-6 py-2 text-xs font-medium text-[#1d4ed8] flex items-center justify-between animate-in fade-in duration-200">
             <span>{notification}</span>
             <button
               type="button"
               onClick={() => setNotification(null)}
-              className="text-[#108A00] hover:text-[#0D7300] cursor-pointer"
+              className="text-[#1d4ed8] hover:text-[#1e40af] cursor-pointer"
             >
               <X className="h-3 w-3" />
             </button>
@@ -354,7 +354,7 @@ Best,
           {activeTab === 'cover-letter' ? (
             <div className="flex flex-col gap-4">
               {/* MODEL SELECTOR CARDS */}
-              <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#E5E7EB]">
+              <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#CBD5E1]">
                 {/* ChatGPT Card */}
                 <button
                   type="button"
@@ -362,18 +362,18 @@ Best,
                   className={cn(
                     'p-2.5 rounded-lg flex items-center gap-2.5 text-left transition-all cursor-pointer relative',
                     activeModel === 'chatgpt'
-                      ? 'bg-[#F1FAF0]/40 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#14A800]'
-                      : 'hover:bg-gray-50'
+                      ? 'bg-[#EFF6FF]/60 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#2563eb]'
+                      : 'hover:bg-slate-50'
                   )}
                 >
-                  <div className="w-6 h-6 rounded-full bg-[#F1FAF0] border border-[#BEE8B8] flex items-center justify-center shrink-0">
-                    <span className="text-[11px] font-bold text-[#14A800]">G</span>
+                  <div className="w-6 h-6 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center shrink-0">
+                    <span className="text-[11px] font-bold text-[#2563eb]">G</span>
                   </div>
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-[#111827] leading-none">
+                    <div className="text-xs font-bold text-[#0F172A] leading-none">
                       ChatGPT
                     </div>
-                    <div className="text-[10px] text-[#14A800] font-medium mt-1 flex items-center gap-1">
+                    <div className="text-[10px] text-[#2563eb] font-medium mt-1 flex items-center gap-1">
                       <span>GPT-5</span>
                       <span>·</span>
                       <span>Ready</span>
@@ -391,18 +391,18 @@ Best,
                   className={cn(
                     'p-2.5 rounded-lg flex items-center gap-2.5 text-left transition-all cursor-pointer relative',
                     activeModel === 'claude'
-                      ? 'bg-gray-50/80 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#111827]'
-                      : 'hover:bg-gray-50 opacity-80 hover:opacity-100'
+                      ? 'bg-slate-50 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]'
+                      : 'hover:bg-slate-50 opacity-80 hover:opacity-100'
                   )}
                 >
                   <div className="w-6 h-6 rounded-full bg-[#FFF7ED] flex items-center justify-center shrink-0">
                     <span className="text-[11px] font-bold text-[#EA580C]">C</span>
                   </div>
                   <div className="min-w-0">
-                    <div className="text-xs font-medium text-[#4B5563] leading-none">
+                    <div className="text-xs font-medium text-[#000000] leading-none">
                       Claude
                     </div>
-                    <div className="text-[10px] text-[#9CA3AF] mt-1">
+                    <div className="text-[10px] text-[#64748B] font-medium mt-1">
                       {claudeGenerated ? 'Claude 3.7 · Ready' : 'Not generated'}
                     </div>
                   </div>
@@ -412,15 +412,15 @@ Best,
               {/* VARIANT TOGGLE & WORD COUNT ROW */}
               <div className="flex items-center justify-between pt-1">
                 {/* Segmented Pill: Original vs Improved */}
-                <div className="bg-[#F3F4F6] p-0.5 rounded-lg inline-flex items-center gap-1">
+                <div className="bg-[#F1F5F9] p-0.5 rounded-lg inline-flex items-center gap-1">
                   <button
                     type="button"
                     onClick={() => setVariant('original')}
                     className={cn(
                       'px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer',
                       variant === 'original'
-                        ? 'bg-white text-[#111827] shadow-xs'
-                        : 'text-[#6B7280] hover:text-[#111827]'
+                        ? 'bg-white text-[#0F172A] shadow-xs'
+                        : 'text-black hover:text-[#0F172A]'
                     )}
                   >
                     Original
@@ -431,8 +431,8 @@ Best,
                     className={cn(
                       'px-3 py-1 rounded-md text-xs font-medium transition-all cursor-pointer inline-flex items-center gap-1',
                       variant === 'improved'
-                        ? 'bg-white text-[#111827] shadow-xs font-semibold'
-                        : 'text-[#6B7280] hover:text-[#111827]'
+                        ? 'bg-white text-[#0F172A] shadow-xs'
+                        : 'text-black hover:text-[#0F172A]'
                     )}
                   >
                     <span>Improved</span>
@@ -441,22 +441,22 @@ Best,
                 </div>
 
                 {/* Word Count Indicator */}
-                <div className="text-xs text-[#6B7280] font-medium">
+                <div className="text-xs text-[#334155] font-medium">
                   {activeModel === 'chatgpt' ? 'GPT-5' : 'Claude'} · {wordCount} words
                 </div>
               </div>
 
               {/* PROPOSAL TEXT CARD */}
-              <div className="relative rounded-xl border border-[#E5E7EB] bg-white p-5 shadow-xs transition-shadow hover:border-gray-300">
+              <div className="relative rounded-xl border border-[#CBD5E1] bg-white p-5 shadow-xs transition-shadow hover:border-slate-400">
                 {/* Top Right Copy Button */}
                 <button
                   type="button"
                   onClick={handleCopyProposal}
                   title="Copy to clipboard"
-                  className="absolute right-3.5 top-3.5 p-1.5 rounded-md text-[#6B7280] hover:text-[#111827] hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="absolute right-3.5 top-3.5 p-1.5 rounded-md text-black hover:text-[#0F172A] hover:bg-slate-100 transition-colors cursor-pointer"
                 >
                   {copiedProposal ? (
-                    <div className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#16A34A]">
+                    <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#16A34A]">
                       <Check className="h-3.5 w-3.5" />
                       <span>Copied</span>
                     </div>
@@ -470,7 +470,7 @@ Best,
                   value={proposalText}
                   onChange={(e) => setProposalText(e.target.value)}
                   rows={14}
-                  className="w-full bg-transparent border-0 p-0 text-sm text-[#1F2937] leading-relaxed resize-none focus:outline-none focus:ring-0 font-normal selection:bg-green-100"
+                  className="w-full bg-transparent border-0 p-0 text-xs text-[#0F172A] leading-relaxed resize-none focus:outline-none focus:ring-0 font-medium selection:bg-blue-100"
                   placeholder="Your proposal will appear here..."
                 />
               </div>
@@ -480,7 +480,7 @@ Best,
             <div className="flex flex-col gap-6">
               {/* Explainer */}
               <div>
-                <p className="text-xs text-[#4B5563] leading-relaxed">
+                <p className="text-xs text-[#334155] font-medium leading-relaxed">
                   Create a trackable link to any document for this job, then see when the client opens it.
                 </p>
               </div>
@@ -489,14 +489,14 @@ Best,
               <div className="flex flex-col gap-3.5">
                 {/* Document Select */}
                 <div>
-                  <label className="block text-xs font-semibold text-[#374151] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Document
                   </label>
                   <div className="relative">
                     <select
                       value={selectedDoc}
                       onChange={(e) => setSelectedDoc(e.target.value)}
-                      className="w-full h-10 px-3 pr-8 rounded-lg border border-[#E5E7EB] bg-white text-xs text-[#111827] shadow-xs appearance-none focus:outline-none focus:border-[#14A800] focus:ring-1 focus:ring-[#14A800] cursor-pointer"
+                      className="w-full h-10 px-3 pr-8 rounded-lg border border-[#CBD5E1] bg-white text-xs text-[#0F172A] font-medium shadow-xs appearance-none focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] cursor-pointer"
                     >
                       <option value="">Select a document</option>
                       <option value="Pitch Deck - Upwork">Pitch Deck - Upwork</option>
@@ -509,20 +509,20 @@ Best,
                       </option>
                       <option value="Rate Card & SLA Agreement">Rate Card & SLA Agreement</option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-[#9CA3AF] pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-black pointer-events-none" />
                   </div>
                 </div>
 
                 {/* Domain Select */}
                 <div>
-                  <label className="block text-xs font-semibold text-[#374151] mb-1.5">
+                  <label className="block text-xs font-bold text-[#0F172A] mb-1.5">
                     Domain
                   </label>
                   <div className="relative">
                     <select
                       value={selectedDomain}
                       onChange={(e) => setSelectedDomain(e.target.value)}
-                      className="w-full h-10 px-3 pr-8 rounded-lg border border-[#E5E7EB] bg-white text-xs text-[#111827] shadow-xs appearance-none focus:outline-none focus:border-[#14A800] focus:ring-1 focus:ring-[#14A800] cursor-pointer"
+                      className="w-full h-10 px-3 pr-8 rounded-lg border border-[#CBD5E1] bg-white text-xs text-[#0F172A] font-medium shadow-xs appearance-none focus:outline-none focus:border-[#2563eb] focus:ring-1 focus:ring-[#2563eb] cursor-pointer"
                     >
                       <option value="files.webethicssolutions.com">
                         files.webethicssolutions.com
@@ -534,9 +534,9 @@ Best,
                         proposals.webethicssolutions.com
                       </option>
                     </select>
-                    <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-[#9CA3AF] pointer-events-none" />
+                    <ChevronDown className="absolute right-3 top-3 h-4 w-4 text-black pointer-events-none" />
                   </div>
-                  <p className="text-[11px] text-[#6B7280] mt-1.5">
+                  <p className="text-[11px] text-[#334155] font-medium mt-1.5">
                     Opens at https://{selectedDomain}/view/...
                   </p>
                 </div>
@@ -545,7 +545,7 @@ Best,
                 <button
                   type="button"
                   onClick={handleCreateLink}
-                  className="w-full h-9 rounded-lg bg-[#14A800] hover:bg-[#108A00] text-white text-xs font-semibold shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer mt-1"
+                  className="w-full h-9 rounded-lg bg-[#2563eb] hover:bg-[#1d4ed8] text-white text-xs font-medium shadow-xs transition-colors flex items-center justify-center gap-1.5 cursor-pointer mt-1"
                 >
                   <Plus className="h-3.5 w-3.5" />
                   <span>Create trackable link</span>
@@ -555,8 +555,8 @@ Best,
               {/* Links List Section */}
               <div className="pt-2">
                 <div className="flex items-center justify-between mb-3">
-                  <h3 className="text-xs font-bold text-[#111827]">Links for this job</h3>
-                  <span className="text-xs text-[#6B7280]">
+                  <h3 className="text-xs font-bold text-[#0F172A]">Links for this job</h3>
+                  <span className="text-xs text-[#334155] font-medium">
                     {links.length} links · {openedCount} opened
                   </span>
                 </div>
@@ -569,25 +569,25 @@ Best,
                     return (
                       <div
                         key={link.id}
-                        className="p-4 rounded-xl border border-[#E5E7EB] bg-white shadow-xs flex flex-col gap-2.5 transition-all hover:border-[#BEE8B8] hover:shadow-sm"
+                        className="p-4 rounded-xl border border-[#CBD5E1] bg-white shadow-xs flex flex-col gap-2.5 transition-all hover:border-[#BFDBFE] hover:shadow-sm"
                       >
                         {/* Title Row */}
                         <div className="flex items-start justify-between gap-3">
                           <div className="flex items-center gap-2.5 min-w-0">
-                            <div className="w-8 h-8 rounded-lg bg-[#F1FAF0] border border-[#BEE8B8] flex items-center justify-center shrink-0">
-                              <FileText className="h-4 w-4 text-[#14A800]" />
+                            <div className="w-8 h-8 rounded-lg bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center shrink-0">
+                              <FileText className="h-4 w-4 text-[#2563eb]" />
                             </div>
                             <div className="min-w-0">
                               <div className="flex items-center gap-2 flex-wrap">
-                                <span className="text-xs font-bold text-[#111827] truncate">
+                                <span className="text-xs font-bold text-[#0F172A] truncate">
                                   {link.title}
                                 </span>
                                 <span
                                   className={cn(
-                                    'px-2 py-0.5 rounded-full text-[10px] font-semibold border',
+                                    'px-2 py-0.5 rounded-full text-[10px] font-bold border',
                                     isOpened
-                                      ? 'bg-[#DFF3DC] text-[#14A800] border-[#BEE8B8]'
-                                      : 'bg-[#F3F4F6] text-[#4B5563] border-[#E5E7EB]'
+                                      ? 'bg-[#DBEAFE] text-[#2563eb] border-[#BFDBFE]'
+                                      : 'bg-[#F1F5F9] text-[#000000] border-[#CBD5E1]'
                                   )}
                                 >
                                   {link.status}
@@ -602,10 +602,10 @@ Best,
                               type="button"
                               onClick={() => handleCopyLink(link)}
                               title="Copy trackable link"
-                              className="p-1.5 rounded-md text-[#6B7280] hover:text-[#111827] hover:bg-gray-100 transition-colors cursor-pointer"
+                              className="p-1.5 rounded-md text-black hover:text-[#0F172A] hover:bg-slate-100 transition-colors cursor-pointer"
                             >
                               {isCopied ? (
-                                <Check className="h-3.5 w-3.5 text-[#14A800]" />
+                                <Check className="h-3.5 w-3.5 text-[#2563eb]" />
                               ) : (
                                 <Copy className="h-3.5 w-3.5" />
                               )}
@@ -615,7 +615,7 @@ Best,
                               target="_blank"
                               rel="noopener noreferrer"
                               title="Open link"
-                              className="p-1.5 rounded-md text-[#6B7280] hover:text-[#111827] hover:bg-gray-100 transition-colors cursor-pointer"
+                              className="p-1.5 rounded-md text-black hover:text-[#0F172A] hover:bg-slate-100 transition-colors cursor-pointer"
                             >
                               <ExternalLink className="h-3.5 w-3.5" />
                             </a>
@@ -627,15 +627,15 @@ Best,
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-xs text-[#14A800] hover:text-[#108A00] hover:underline font-mono truncate"
+                          className="text-xs text-[#2563eb] hover:text-[#1d4ed8] hover:underline font-mono font-medium truncate"
                         >
                           {link.url}
                         </a>
 
                         {/* Stats Row */}
-                        <div className="flex items-center gap-2 text-[11px] text-[#6B7280] flex-wrap">
-                          <span className="inline-flex items-center gap-1 font-medium">
-                            <Eye className="h-3 w-3" />
+                        <div className="flex items-center gap-2 text-[11px] text-[#334155] font-medium flex-wrap">
+                          <span className="inline-flex items-center gap-1 font-medium text-[#0F172A]">
+                            <Eye className="h-3 w-3 text-black" />
                             <span>{link.views} views</span>
                           </span>
                           <span>·</span>
@@ -645,13 +645,13 @@ Best,
                         </div>
 
                         {/* Insert Button */}
-                        <div className="pt-1 border-t border-gray-100">
+                        <div className="pt-1 border-t border-slate-100">
                           <button
                             type="button"
                             onClick={() => handleInsertIntoLetter(link.url)}
-                            className="inline-flex items-center gap-1 text-xs font-semibold text-[#14A800] hover:text-[#108A00] transition-colors cursor-pointer"
+                            className="inline-flex items-center gap-1 text-xs font-medium text-[#2563eb] hover:text-[#1d4ed8] transition-colors cursor-pointer"
                           >
-                            <Plus className="h-3.5 w-3.5 text-[#14A800]" />
+                            <Plus className="h-3.5 w-3.5 text-[#2563eb]" />
                             <span>Insert into letter</span>
                           </button>
                         </div>
@@ -666,15 +666,15 @@ Best,
 
         {/* 3. FOOTER TOOLBAR (Keeps ONLY ⟳ Regenerate, excludes crossed-out buttons) */}
         {activeTab === 'cover-letter' && (
-          <div className="px-6 py-3.5 border-t border-[#E5E7EB] bg-white flex items-center justify-center shrink-0">
+          <div className="px-6 py-3.5 border-t border-[#CBD5E1] bg-white flex items-center justify-center shrink-0">
             <button
               type="button"
               onClick={handleRegenerate}
               disabled={isRegenerating}
-              className="inline-flex items-center justify-center gap-2 px-5 py-2 text-xs font-medium text-[#374151] hover:text-[#111827] hover:bg-gray-50 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
+              className="inline-flex items-center justify-center gap-2 px-5 py-2 text-xs font-medium text-[#000000] hover:text-[#0F172A] hover:bg-slate-50 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
             >
               <RotateCw
-                className={cn('h-3.5 w-3.5 text-[#4B5563]', isRegenerating && 'animate-spin')}
+                className={cn('h-3.5 w-3.5 text-black', isRegenerating && 'animate-spin')}
               />
               <span>Regenerate</span>
             </button>

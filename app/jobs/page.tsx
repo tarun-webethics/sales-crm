@@ -21,7 +21,7 @@ export default function JobsPage() {
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const [pageSize, setPageSize] = useState<number>(15);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [, startTransition] = useTransition();

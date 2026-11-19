@@ -6,21 +6,21 @@ export default function LinkedInAIPage() {
   return (
     <div className="space-y-6 w-full">
       <div>
-        <h1 className="text-2xl font-semibold tracking-tight text-[#001E00]">
+        <h1 className="text-xl font-medium tracking-tight text-black">
           LinkedIn AI
         </h1>
-        <p className="text-xs sm:text-sm text-[#6B7280] mt-0.5">
+        <p className="text-xs text-black mt-0.5">
           AI-driven prospecting, connection management, and personalized messaging
         </p>
       </div>
 
-      <Card className="rounded-xl border border-[#E5E7EB] bg-white shadow-xs p-12 text-center">
+      <Card className="rounded-xl border border-[#CBD5E1] bg-white shadow-xs p-12 text-center">
         <CardContent className="flex flex-col items-center justify-center max-w-md mx-auto space-y-3 p-0">
-          <div className="h-12 w-12 rounded-full bg-[#F1FAF0] text-[#14A800] flex items-center justify-center">
+          <div className="h-12 w-12 rounded-full bg-[#EFF6FF] text-[#2563eb] border border-[#BFDBFE] flex items-center justify-center">
             <Share2 className="h-6 w-6" />
           </div>
-          <h2 className="text-lg font-semibold text-[#001E00]">LinkedIn AI Coming Soon</h2>
-          <p className="text-sm text-[#6B7280]">
+          <h2 className="text-lg font-bold text-[#0F172A]">LinkedIn AI Coming Soon</h2>
+          <p className="text-sm text-[#334155] font-medium">
             Intelligent prospect discovery and LinkedIn engagement workflows are in development.
           </p>
         </CardContent>

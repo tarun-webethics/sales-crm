@@ -23,9 +23,9 @@ export function BulkBar({
   if (selectedCount === 0) return null;
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 bg-[#001E00] text-white px-4 py-2.5 rounded-xl shadow-2xl border border-white/10 animate-in fade-in slide-in-from-bottom-4 duration-200">
+    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 bg-[#0F172A] text-white px-4 py-2.5 rounded-xl shadow-2xl border border-white/10 animate-in fade-in slide-in-from-bottom-4 duration-200">
       <div className="flex items-center gap-2 pr-2 border-r border-white/20">
-        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#14A800] text-[11px] font-bold text-white">
+        <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#2563eb] text-[11px] font-bold text-white">
           {selectedCount}
         </span>
         <span className="text-xs font-medium text-white/90">
@@ -40,7 +40,7 @@ export function BulkBar({
           onClick={() => onBulkStatusChange('Applied')}
           className="h-7 text-xs bg-white/10 text-white border-white/20 hover:bg-white/20 hover:text-white"
         >
-          <CheckCircle2 className="h-3.5 w-3.5 mr-1 text-[#14A800]" />
+          <CheckCircle2 className="h-3.5 w-3.5 mr-1 text-[#2563eb]" />
           Mark Applied
         </Button>
 
@@ -60,7 +60,7 @@ export function BulkBar({
           onClick={() => onBulkStatusChange('Hired')}
           className="h-7 text-xs bg-white/10 text-white border-white/20 hover:bg-white/20 hover:text-white"
         >
-          <Award className="h-3.5 w-3.5 mr-1 text-[#14A800]" />
+          <Award className="h-3.5 w-3.5 mr-1 text-[#2563eb]" />
           Hired
         </Button>
 

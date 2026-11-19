@@ -59,7 +59,7 @@ export function Header() {
         isScrolled ? 'shadow-xs' : 'shadow-none'
       )}
     >
-      <div className="mx-auto flex h-full w-full max-w-[1920px] items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-full w-full items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Left Side: Mobile Menu + Logo + Desktop Nav */}
         <div className="flex items-center gap-3 lg:gap-8 min-w-0">
           {/* Mobile Navigation Sheet Trigger */}
@@ -68,18 +68,18 @@ export function Header() {
               <Button
                 variant="ghost"
                 size="icon"
-                className="lg:hidden h-9 w-9 text-[#3C4043] hover:bg-[#F3F4F6] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800]"
+                className="lg:hidden h-9 w-9 text-[#0F172A] hover:bg-slate-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]"
                 aria-label="Open navigation menu"
               >
                 <Menu className="h-5 w-5" />
               </Button>
             </SheetTrigger>
             <SheetContent side="left" className="w-72 sm:w-80 p-0 flex flex-col">
-              <SheetHeader className="p-4 border-b border-[#E5E7EB] flex flex-row items-center justify-between text-left">
+              <SheetHeader className="p-4 border-b border-[#CBD5E1] flex flex-row items-center justify-between text-left">
                 <Link
                   href="/dashboard"
                   onClick={() => setMobileNavOpen(false)}
-                  className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800] rounded-lg"
+                  className="flex items-center gap-2.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb] rounded-lg"
                 >
                   <Image
                     src="/logo.png"
@@ -90,10 +90,10 @@ export function Header() {
                     priority
                   />
                   <div className="flex flex-col">
-                    <span className="font-bold text-base tracking-tight text-[#001E00]">
+                    <span className="font-bold text-base tracking-tight text-[#0F172A]">
                       Webethics
                     </span>
-                    <span className="text-[10px] uppercase tracking-wider text-[#6B7280] font-medium">
+                    <span className="text-[10px] uppercase tracking-wider text-[#334155]">
                       Intelligence Portal
                     </span>
                   </div>
@@ -112,16 +112,16 @@ export function Header() {
                       href={item.href}
                       onClick={() => setMobileNavOpen(false)}
                       className={cn(
-                        'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800]',
+                        'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]',
                         active
-                          ? 'bg-[#F1FAF0] text-[#14A800] font-semibold border-l-3 border-[#14A800] pl-2.5'
-                          : 'text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#001E00]'
+                          ? 'bg-[#EFF6FF] text-[#2563eb] border-l-3 border-[#2563eb] pl-2.5'
+                          : 'text-[#000000] hover:bg-[#F3F4F6] hover:text-[#000000]'
                       )}
                     >
                       <Icon
                         className={cn(
                           'h-4 w-4 shrink-0',
-                          active ? 'text-[#14A800]' : 'text-[#6B7280]'
+                          active ? 'text-[#2563eb]' : 'text-black'
                         )}
                       />
                       <span>{item.label}</span>
@@ -135,7 +135,7 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/dashboard"
-            className="flex items-center gap-2.5 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800]"
+            className="flex items-center gap-2.5 shrink-0 rounded-lg focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]"
           >
             <Image
               src="/logo.svg"
@@ -157,16 +157,16 @@ export function Header() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'relative flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800]',
+                    'relative flex items-center gap-2 px-3 py-2 text-sm rounded-md transition-colors duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#2563eb]',
                     active
-                      ? 'bg-[#F1FAF0] text-[#14A800] font-semibold after:absolute after:bottom-0 after:left-2 after:right-2 after:h-[2px] after:bg-[#14A800]'
-                      : 'text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#001E00]'
+                      ? 'bg-[#EFF6FF] text-[#2563eb] after:absolute after:bottom-0 after:left-2 after:right-2 after:h-[2px] after:bg-[#2563eb]'
+                      : 'text-[#000000] hover:bg-[#F3F4F6] hover:text-[#000000]'
                   )}
                 >
                   <Icon
                     className={cn(
                       'h-4 w-4 shrink-0',
-                      active ? 'text-[#14A800]' : 'text-[#6B7280]'
+                      active ? 'text-[#2563eb]' : 'text-black'
                     )}
                   />
                   <span>{item.label}</span>
@@ -182,18 +182,18 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="flex items-center gap-2.5 h-10 px-2 sm:px-2.5 rounded-lg hover:bg-[#F3F4F6] focus-visible:ring-2 focus-visible:ring-[#14A800] focus-visible:outline-none cursor-pointer"
+                className="flex items-center gap-2.5 h-10 px-2 sm:px-2.5 rounded-lg hover:bg-[#F3F4F6] focus-visible:ring-2 focus-visible:ring-[#2563eb] focus-visible:outline-none cursor-pointer"
                 aria-label="User account menu"
               >
-                <Avatar className="h-8 w-8 border border-[#BEE8B8]">
-                  <AvatarFallback className="bg-[#DFF3DC] text-[#14A800] text-xs font-bold">
+                <Avatar className="h-8 w-8 border border-[#BFDBFE]">
+                  <AvatarFallback className="bg-[#DBEAFE] text-[#2563eb] text-xs font-bold">
                     HV
                   </AvatarFallback>
                 </Avatar>
-                <span className="hidden sm:inline font-medium text-sm text-[#001E00]">
+                <span className="hidden sm:inline text-sm text-[#0F172A]">
                   Harsh Vardhan
                 </span>
-                <ChevronDown className="hidden sm:inline h-4 w-4 text-[#6B7280]" />
+                <ChevronDown className="hidden sm:inline h-4 w-4 text-black" />
               </Button>
             </DropdownMenuTrigger>
 
@@ -204,22 +204,22 @@ export function Header() {
             >
               {/* Header section */}
               <div className="flex items-center gap-2.5 p-2 rounded-md bg-[#F9FAFB] border border-[#E5E7EB] mb-1">
-                <Avatar className="h-8 w-8 border border-[#BEE8B8] shrink-0">
-                  <AvatarFallback className="bg-[#DFF3DC] text-[#14A800] text-xs font-bold">
+                <Avatar className="h-8 w-8 border border-[#BFDBFE] shrink-0">
+                  <AvatarFallback className="bg-[#DBEAFE] text-[#2563eb] text-xs font-bold">
                     HV
                   </AvatarFallback>
                 </Avatar>
                 <div className="flex flex-col min-w-0">
-                  <span className="text-xs font-semibold text-[#001E00] truncate">
+                  <span className="text-xs font-bold text-[#0F172A] truncate">
                     Harsh Vardhan
                   </span>
                   <span
-                    className="text-[11px] text-[#6B7280] truncate font-mono"
+                    className="text-[11px] text-[#334155] truncate font-mono"
                     title="info.webethics@gmail.com"
                   >
                     info.webethics@gmail.com
                   </span>
-                  <span className="text-[10px] text-[#9CA3AF] font-medium tracking-tight mt-0.5">
+                  <span className="text-[10px] text-black tracking-tight mt-0.5">
                     Internal Corporate Access
                   </span>
                 </div>
@@ -229,9 +229,9 @@ export function Header() {
               <DropdownMenuItem asChild>
                 <Link
                   href="/settings"
-                  className="flex items-center gap-2.5 cursor-pointer text-sm"
+                  className="flex items-center gap-2.5 cursor-pointer text-sm text-[#000000]"
                 >
-                  <User className="h-4 w-4 text-[#6B7280]" />
+                  <User className="h-4 w-4 text-black" />
                   <span>Account Settings</span>
                 </Link>
               </DropdownMenuItem>
@@ -240,9 +240,9 @@ export function Header() {
               <DropdownMenuItem asChild>
                 <Link
                   href="/settings?tab=password"
-                  className="flex items-center gap-2.5 cursor-pointer text-sm"
+                  className="flex items-center gap-2.5 cursor-pointer text-sm text-[#000000]"
                 >
-                  <KeyRound className="h-4 w-4 text-[#6B7280]" />
+                  <KeyRound className="h-4 w-4 text-black" />
                   <span>Change Password</span>
                 </Link>
               </DropdownMenuItem>

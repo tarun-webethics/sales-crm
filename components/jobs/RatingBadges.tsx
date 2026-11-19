@@ -20,15 +20,15 @@ export function RatingBadges({
   if (verdict === 'Rejected') {
     verdictColor = 'bg-[#FEE2E2] text-[#DC2626] border-[#FECACA]';
   } else if (verdict === 'Approved') {
-    verdictColor = 'bg-[#DFF3DC] text-[#14A800] border-[#BEE8B8]';
+    verdictColor = 'bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]';
   }
 
   return (
-    <div className={cn('flex flex-wrap items-center gap-1.5', className)}>
+    <div className={cn('inline-flex items-center gap-1 select-none whitespace-nowrap', className)}>
       {/* Verdict Pill */}
       <span
         className={cn(
-          'inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[11px] font-medium border',
+          'inline-flex items-center gap-0.5 h-[18px] px-1.5 rounded-[4px] text-[10px] font-medium border leading-none shrink-0',
           verdictColor
         )}
       >
@@ -50,7 +50,7 @@ export function RatingBadges({
           <span
             key={idx}
             className={cn(
-              'inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-normal border',
+              'inline-flex items-center gap-0.5 h-[18px] px-1 rounded-[4px] text-[10px] font-normal border leading-none shrink-0',
               modelBadgeClass
             )}
           >

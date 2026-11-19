@@ -23,23 +23,23 @@ const statusConfig: Record<
 > = {
   'Not Applied': {
     label: 'Not Applied',
-    pillClass: 'bg-[#F3F4F6] text-[#4B5563] border-[#E5E7EB] hover:bg-[#E5E7EB]',
-    dotClass: 'bg-[#9CA3AF]',
+    pillClass: 'bg-slate-100/80 text-slate-700 border-slate-200/80 hover:bg-slate-200/70 font-medium',
+    dotClass: 'bg-slate-400',
   },
   Applied: {
     label: 'Applied',
-    pillClass: 'bg-[#EFF6FF] text-[#1D4ED8] border-[#BFDBFE] hover:bg-[#DBEAFE]',
-    dotClass: 'bg-[#2563EB]',
+    pillClass: 'bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100/70 font-medium',
+    dotClass: 'bg-blue-600',
   },
   Interviewing: {
     label: 'Interviewing',
-    pillClass: 'bg-[#FFFBEB] text-[#B45309] border-[#FDE68A] hover:bg-[#FEF3C7]',
-    dotClass: 'bg-[#F59E0B]',
+    pillClass: 'bg-amber-50 text-amber-700 border-amber-200 hover:bg-amber-100/70 font-medium',
+    dotClass: 'bg-amber-500',
   },
   Hired: {
     label: 'Hired',
-    pillClass: 'bg-[#F0FDF4] text-[#15803D] border-[#BBF7D0] hover:bg-[#DCFCE7]',
-    dotClass: 'bg-[#14A800]',
+    pillClass: 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100/70 font-medium',
+    dotClass: 'bg-emerald-600',
   },
 };
 
@@ -63,18 +63,18 @@ export function StatusSelect({
         <button
           type="button"
           className={cn(
-            'inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium border transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#14A800] focus-visible:ring-offset-1 cursor-pointer whitespace-nowrap',
+            'inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium border transition-all shadow-2xs focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-600 focus-visible:ring-offset-1 cursor-pointer whitespace-nowrap leading-tight',
             current.pillClass,
             className
           )}
         >
-          <span className={cn('h-1.5 w-1.5 rounded-full', current.dotClass)} />
+          <span className={cn('h-1.5 w-1.5 rounded-full shrink-0', current.dotClass)} />
           <span>{current.label}</span>
-          <ChevronDown className="h-3 w-3 opacity-60 ml-0.5" />
+          <ChevronDown className="h-3 w-3 opacity-60 ml-0.5 shrink-0" />
         </button>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="end" className="w-36 p-1">
+      <DropdownMenuContent align="end" className="w-34 p-1">
         {allStatuses.map((item) => {
           const cfg = statusConfig[item];
           const isSelected = item === status;
@@ -83,15 +83,15 @@ export function StatusSelect({
               key={item}
               onClick={() => onStatusChange(item)}
               className={cn(
-                'flex items-center justify-between text-xs py-1.5 px-2 cursor-pointer font-medium',
-                isSelected && 'font-semibold text-[#14A800]'
+                'flex items-center justify-between text-[11px] py-1.5 px-2 cursor-pointer font-medium text-[#0F172A]',
+                isSelected && 'font-bold text-[#2563eb]'
               )}
             >
-              <div className="flex items-center gap-2">
-                <span className={cn('h-2 w-2 rounded-full', cfg.dotClass)} />
+              <div className="flex items-center gap-1.5">
+                <span className={cn('h-1.5 w-1.5 rounded-full shrink-0', cfg.dotClass)} />
                 <span>{cfg.label}</span>
               </div>
-              {isSelected && <Check className="h-3.5 w-3.5 text-[#14A800]" />}
+              {isSelected && <Check className="h-3 w-3 text-[#2563eb]" />}
             </DropdownMenuItem>
           );
         })}

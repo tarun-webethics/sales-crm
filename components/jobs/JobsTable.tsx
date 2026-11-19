@@ -98,29 +98,29 @@ export function JobsTable({
   const renderSortIndicator = (field: SortField) => {
     if (sortField !== field) {
       return (
-        <ArrowUpDown className="ml-1 h-3.5 w-3.5 text-[#9CA3AF] opacity-0 group-hover:opacity-100 transition-opacity" />
+        <ArrowUpDown className="ml-1 h-3.5 w-3.5 text-[#64748B] opacity-0 group-hover:opacity-100 transition-opacity" />
       );
     }
     return sortDirection === 'asc' ? (
-      <ArrowUp className="ml-1 h-3.5 w-3.5 text-[#14A800]" />
+      <ArrowUp className="ml-1 h-3.5 w-3.5 text-[#2563eb]" />
     ) : (
-      <ArrowDown className="ml-1 h-3.5 w-3.5 text-[#14A800]" />
+      <ArrowDown className="ml-1 h-3.5 w-3.5 text-[#2563eb]" />
     );
   };
 
   return (
     <>
-      <Card className="rounded-xl border border-[#E5E7EB] bg-white shadow-xs overflow-hidden">
+      <Card className="bg-white shadow-xs overflow-hidden">
         <Table className="w-full">
-          <TableHeader className="bg-[#F9FAFB] sticky top-0 z-10">
-            <TableRow className="hover:bg-[#F9FAFB] border-b border-[#E5E7EB]">
+          <TableHeader className="bg-slate-50/75 sticky top-0 z-10 backdrop-blur-xs">
+            <TableRow className="hover:bg-transparent border-b border-slate-200/80">
               {/* 0. Expand Toggle Column */}
-              <TableHead className="w-8 pl-3.5 pr-0 py-3.5">
+              <TableHead className="w-8 pl-3.5 pr-0 py-2.5">
                 <span className="sr-only">Expand details</span>
               </TableHead>
 
               {/* 1. Checkbox Select All */}
-              <TableHead className="w-9 px-1 py-3.5">
+              <TableHead className="w-9 px-1 py-2.5">
                 <Checkbox
                   checked={isAllSelected ? true : isPartiallySelected ? 'indeterminate' : false}
                   onCheckedChange={onToggleSelectAll}
@@ -131,7 +131,7 @@ export function JobsTable({
               {/* 2. JOB TITLE */}
               <TableHead
                 className={cn(
-                  'px-3.5 py-3.5 transition-all duration-300 font-medium text-xs text-[#6B7280]',
+                  'px-3.5 py-2.5 transition-all duration-300 font-semibold text-[11px] text-slate-500 uppercase tracking-wider',
                   isFiltersOpen
                     ? 'w-[280px] max-w-[340px] xl:max-w-[420px]'
                     : 'w-[420px] max-w-[560px] xl:max-w-[740px]'
@@ -141,16 +141,16 @@ export function JobsTable({
               </TableHead>
 
               {/* 3. AI RATING (Tags placed in their own column) */}
-              <TableHead className="whitespace-nowrap px-3.5 py-3.5 font-medium text-xs text-[#6B7280]">
+              <TableHead className="whitespace-nowrap px-3.5 py-2.5 font-semibold text-[11px] text-slate-500 uppercase tracking-wider">
                 AI Rating
               </TableHead>
 
               {/* 4. BUDGET (Sortable) */}
-              <TableHead className="whitespace-nowrap px-3.5 py-3.5">
+              <TableHead className="whitespace-nowrap px-3.5 py-2.5 font-semibold text-[11px] uppercase tracking-wider">
                 <button
                   type="button"
                   onClick={() => onSortChange('budget')}
-                  className="group inline-flex items-center text-xs font-medium text-[#6B7280] hover:text-[#111827] cursor-pointer"
+                  className="group inline-flex items-center text-[11px] font-semibold text-slate-500 hover:text-slate-900 cursor-pointer uppercase tracking-wider"
                 >
                   <span>Budget</span>
                   {renderSortIndicator('budget')}
@@ -158,11 +158,11 @@ export function JobsTable({
               </TableHead>
 
               {/* 5. POSTED (Sortable) */}
-              <TableHead className="whitespace-nowrap px-3.5 py-3.5">
+              <TableHead className="whitespace-nowrap px-3.5 py-2.5 font-semibold text-[11px] uppercase tracking-wider">
                 <button
                   type="button"
                   onClick={() => onSortChange('posted')}
-                  className="group inline-flex items-center text-xs font-medium text-[#6B7280] hover:text-[#111827] cursor-pointer"
+                  className="group inline-flex items-center text-[11px] font-semibold text-slate-500 hover:text-slate-900 cursor-pointer uppercase tracking-wider"
                 >
                   <span>Posted</span>
                   {renderSortIndicator('posted')}
@@ -170,11 +170,11 @@ export function JobsTable({
               </TableHead>
 
               {/* 6. TOTAL SPENT (Sortable) */}
-              <TableHead className="whitespace-nowrap px-3.5 py-3.5">
+              <TableHead className="whitespace-nowrap px-3.5 py-2.5 font-semibold text-[11px] uppercase tracking-wider">
                 <button
                   type="button"
                   onClick={() => onSortChange('totalSpent')}
-                  className="group inline-flex items-center text-xs font-medium text-[#6B7280] hover:text-[#111827] cursor-pointer"
+                  className="group inline-flex items-center text-[11px] font-semibold text-slate-500 hover:text-slate-900 cursor-pointer uppercase tracking-wider"
                 >
                   <span>Total Spent</span>
                   {renderSortIndicator('totalSpent')}
@@ -182,12 +182,12 @@ export function JobsTable({
               </TableHead>
 
               {/* 7. LOCATION */}
-              <TableHead className="whitespace-nowrap px-3.5 py-3.5 font-medium text-xs text-[#6B7280]">
+              <TableHead className="whitespace-nowrap px-3.5 py-2.5 font-semibold text-[11px] text-slate-500 uppercase tracking-wider">
                 Location
               </TableHead>
 
               {/* 8. STATUS */}
-              <TableHead className="whitespace-nowrap px-3.5 pr-4 py-3.5 font-medium text-xs text-[#6B7280]">
+              <TableHead className="whitespace-nowrap px-3.5 pr-4 py-2.5 font-semibold text-[11px] text-slate-500 uppercase tracking-wider">
                 Status
               </TableHead>
             </TableRow>
@@ -196,52 +196,55 @@ export function JobsTable({
           <TableBody>
             {isLoading ? (
               // Skeleton loading state (9 columns)
-              Array.from({ length: 8 }).map((_, idx) => (
-                <TableRow key={idx} className="border-b border-[#E5E7EB]">
+              Array.from({ length: pageSize }).map((_, idx) => (
+                <TableRow key={idx} className="border-b border-slate-100">
                   {/* 0. Expand */}
-                  <TableCell className="w-8 pl-3.5 pr-0 py-3.5">
+                  <TableCell className="w-8 pl-3.5 pr-0 py-2">
                     <Skeleton className="h-4 w-4 rounded" />
                   </TableCell>
                   {/* 1. Checkbox */}
-                  <TableCell className="w-9 px-1 py-3.5">
+                  <TableCell className="w-9 px-1 py-2">
                     <Skeleton className="h-4 w-4 rounded" />
                   </TableCell>
                   {/* 2. Job Title */}
                   <TableCell
                     className={cn(
-                      'px-3.5 py-3.5 transition-all duration-300',
+                      'px-3.5 py-2 transition-all duration-300',
                       isFiltersOpen
                         ? 'w-[280px] max-w-[340px] xl:max-w-[420px]'
                         : 'w-[420px] max-w-[560px] xl:max-w-[740px]'
                     )}
                   >
-                    <Skeleton className="h-4 w-4/5" />
+                    <div className="flex items-center gap-1.5">
+                      <Skeleton className="h-4 w-4 rounded-full shrink-0" />
+                      <Skeleton className="h-4 w-4/5" />
+                    </div>
                   </TableCell>
                   {/* 3. AI Rating */}
-                  <TableCell className="whitespace-nowrap px-3.5 py-3.5">
-                    <div className="flex gap-1.5">
-                      <Skeleton className="h-5 w-20 rounded-md" />
-                      <Skeleton className="h-5 w-12 rounded" />
+                  <TableCell className="whitespace-nowrap px-3.5 py-2">
+                    <div className="flex gap-1 items-center">
+                      <Skeleton className="h-[18px] w-20 rounded-[4px]" />
+                      <Skeleton className="h-[18px] w-10 rounded-[4px]" />
                     </div>
                   </TableCell>
                   {/* 4. Budget */}
-                  <TableCell className="whitespace-nowrap px-3.5 py-3.5">
+                  <TableCell className="whitespace-nowrap px-3.5 py-2">
                     <Skeleton className="h-4 w-14" />
                   </TableCell>
                   {/* 5. Posted */}
-                  <TableCell className="whitespace-nowrap px-3.5 py-3.5">
+                  <TableCell className="whitespace-nowrap px-3.5 py-2">
                     <Skeleton className="h-4 w-16" />
                   </TableCell>
                   {/* 6. Total Spent */}
-                  <TableCell className="whitespace-nowrap px-3.5 py-3.5">
+                  <TableCell className="whitespace-nowrap px-3.5 py-2">
                     <Skeleton className="h-4 w-14" />
                   </TableCell>
                   {/* 7. Location */}
-                  <TableCell className="whitespace-nowrap px-3.5 py-3.5">
+                  <TableCell className="whitespace-nowrap px-3.5 py-2">
                     <Skeleton className="h-4 w-16" />
                   </TableCell>
                   {/* 8. Status */}
-                  <TableCell className="whitespace-nowrap px-3.5 pr-4 py-3.5">
+                  <TableCell className="whitespace-nowrap px-3.5 pr-4 py-2">
                     <Skeleton className="h-6 w-24 rounded-full" />
                   </TableCell>
                 </TableRow>
@@ -251,17 +254,17 @@ export function JobsTable({
               <TableRow>
                 <TableCell
                   colSpan={9}
-                  className="h-64 text-center text-[#6B7280]"
+                  className="h-64 text-center text-slate-500"
                 >
                   <div className="flex flex-col items-center justify-center space-y-3">
-                    <div className="p-3 bg-[#F3F4F6] rounded-full text-[#9CA3AF]">
-                      <Briefcase className="h-8 w-8 opacity-60" />
+                    <div className="p-3 bg-slate-100 rounded-full text-slate-400">
+                      <Briefcase className="h-7 w-7 opacity-75" />
                     </div>
                     <div className="space-y-1">
-                      <p className="text-base font-semibold text-[#001E00]">
+                      <p className="text-sm font-semibold text-slate-900">
                         No jobs found matching your criteria
                       </p>
-                      <p className="text-xs text-[#6B7280]">
+                      <p className="text-xs text-slate-500">
                         Try adjusting or clearing your search queries and filters.
                       </p>
                     </div>
@@ -269,7 +272,7 @@ export function JobsTable({
                       variant="outline"
                       size="sm"
                       onClick={onResetFilters}
-                      className="mt-2 text-xs border-[#E5E7EB]"
+                      className="mt-2 text-xs border-slate-200 text-slate-700 hover:bg-slate-50 rounded-lg shadow-2xs"
                     >
                       Clear Filters
                     </Button>
@@ -292,26 +295,26 @@ export function JobsTable({
         </Table>
 
         {/* Pagination and Rows Per Page Footer */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 border-t border-[#E5E7EB] bg-white">
-          <div className="flex items-center gap-3 text-xs text-[#6B7280]">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-3.5 border-t border-slate-100 bg-white">
+          <div className="flex items-center gap-3 text-xs text-slate-500">
             <span>
               Showing{' '}
-              <strong className="text-[#001E00] font-semibold">
+              <strong className="text-slate-800 font-semibold">
                 {totalFilteredCount === 0 ? 0 : startIndex + 1}
               </strong>
               –
-              <strong className="text-[#001E00] font-semibold">
+              <strong className="text-slate-800 font-semibold">
                 {endIndex}
               </strong>{' '}
               of{' '}
-              <strong className="text-[#001E00] font-semibold">
+              <strong className="text-slate-800 font-semibold">
                 {totalFilteredCount.toLocaleString()}
               </strong>{' '}
               jobs
             </span>
 
             <div className="hidden sm:flex items-center gap-1.5 ml-4">
-              <span className="text-[11px] text-[#9CA3AF] uppercase font-medium">
+              <span className="text-[10px] text-slate-400 uppercase font-semibold">
                 Rows:
               </span>
               <Select
@@ -321,17 +324,20 @@ export function JobsTable({
                   onPageChange(1);
                 }}
               >
-                <SelectTrigger className="h-7 w-16 text-xs bg-[#F9FAFB] border-[#E5E7EB]">
+                <SelectTrigger className="h-7 w-16 text-xs bg-slate-50/70 border border-slate-200 text-slate-700 hover:bg-white font-medium rounded-md shadow-2xs">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent align="end">
-                  <SelectItem value="10" className="text-xs">
+                  <SelectItem value="10" className="text-xs text-slate-800 font-medium">
                     10
                   </SelectItem>
-                  <SelectItem value="20" className="text-xs">
+                  <SelectItem value="15" className="text-xs text-slate-800 font-medium">
+                    15
+                  </SelectItem>
+                  <SelectItem value="20" className="text-xs text-slate-800 font-medium">
                     20
                   </SelectItem>
-                  <SelectItem value="50" className="text-xs">
+                  <SelectItem value="50" className="text-xs text-slate-800 font-medium">
                     50
                   </SelectItem>
                 </SelectContent>

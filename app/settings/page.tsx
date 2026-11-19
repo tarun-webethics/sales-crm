@@ -160,10 +160,10 @@ function SettingsContent() {
   return (
     <div className="w-full flex flex-col lg:flex-row gap-8 lg:gap-12 min-h-[calc(100vh-8rem)]">
       {/* Left Settings Sidebar (Width: 260px desktop) */}
-      <aside className="w-full lg:w-64 xl:w-72 shrink-0 lg:border-r lg:border-[#E5E7EB] lg:pr-8 space-y-6 self-start">
+      <aside className="w-full lg:w-64 xl:w-72 shrink-0 lg:border-r lg:border-[#CBD5E1] lg:pr-8 space-y-6 self-start">
         {settingsSections.map((section) => (
           <div key={section.title} className="space-y-1">
-            <div className="px-3 text-xs font-medium text-[#9CA3AF] mb-1.5">
+            <div className="px-3 text-[11px] font-bold text-[#334155] uppercase tracking-wider mb-1.5">
               {section.title}
             </div>
             <div className="space-y-0.5">
@@ -180,14 +180,14 @@ function SettingsContent() {
                     className={cn(
                       'w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all text-left cursor-pointer',
                       isActive
-                        ? 'bg-[#F1FAF0] text-[#14A800] font-semibold border-l-3 border-[#14A800] pl-2.5'
-                        : 'text-[#4B5563] hover:bg-[#F9FAFB] hover:text-[#111827]'
+                        ? 'bg-[#EFF6FF] text-[#2563eb] border-l-3 border-[#2563eb] pl-2.5'
+                        : 'text-[#000000] hover:bg-slate-50 hover:text-[#0F172A]'
                     )}
                   >
                     <Icon
                       className={cn(
                         'h-4 w-4 shrink-0 transition-colors',
-                        isActive ? 'text-[#14A800]' : 'text-[#6B7280]'
+                        isActive ? 'text-[#2563eb]' : 'text-black'
                       )}
                     />
                     <span className="truncate">{item.label}</span>
@@ -203,23 +203,23 @@ function SettingsContent() {
       <div className="flex-1 min-w-0 lg:pl-2 xl:pl-4 py-1">
         <div className="space-y-6 max-w-4xl animate-in fade-in duration-200">
           <div>
-            <h1 className="text-2xl font-bold tracking-tight text-[#111827]">
+            <h1 className="text-xl font-medium tracking-tight text-black">
               {currentInfo.title}
             </h1>
-            <p className="text-sm text-[#6B7280] mt-1">
+            <p className="text-sm text-[#334155] font-medium mt-1">
               {currentInfo.subtitle}
             </p>
           </div>
 
-          <div className="rounded-xl border border-[#E5E7EB] bg-white shadow-xs p-12 sm:p-16 text-center">
+          <div className="rounded-xl border border-[#CBD5E1] bg-white shadow-xs p-12 sm:p-16 text-center">
             <div className="flex flex-col items-center justify-center max-w-md mx-auto space-y-4">
-              <div className="h-14 w-14 rounded-full bg-[#F1FAF0] text-[#14A800] border border-[#BEE8B8] flex items-center justify-center">
-                <IconComponent className="h-7 w-7 text-[#14A800]" />
+              <div className="h-14 w-14 rounded-full bg-[#EFF6FF] text-[#2563eb] border border-[#BFDBFE] flex items-center justify-center">
+                <IconComponent className="h-7 w-7 text-[#2563eb]" />
               </div>
-              <h2 className="text-lg font-semibold text-[#111827]">
+              <h2 className="text-lg font-bold text-[#0F172A]">
                 {currentInfo.title} Coming Soon
               </h2>
-              <p className="text-sm text-[#6B7280] leading-relaxed">
+              <p className="text-sm text-[#334155] font-medium leading-relaxed">
                 {currentInfo.description}
               </p>
             </div>
@@ -232,11 +232,11 @@ function SettingsContent() {
 
 export default function SettingsPage() {
   return (
-    <div className="w-full max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-6">
+    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <Suspense
         fallback={
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#14A800] border-t-transparent" />
+            <div className="h-8 w-8 animate-spin rounded-full border-2 border-[#2563eb] border-t-transparent" />
           </div>
         }
       >
