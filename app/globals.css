@@ -1,0 +1,228 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #14A800;
+  --color-primary-hover: #108A00;
+  --color-primary-active: #0D7300;
+  --color-primary-tint: #F1FAF0;
+  --color-primary-badge: #DFF3DC;
+  --color-primary-border: #BEE8B8;
+
+  --color-page-bg: #FFFFFF;
+  --color-card-bg: #FFFFFF;
+  --color-border-subtle: #E5E7EB;
+  --color-heading: #001E00;
+  --color-body: #3C4043;
+  --color-muted-text: #6B7280;
+
+  --color-semantic-amber: #F59E0B;
+  --color-semantic-red: #DC2626;
+  --color-semantic-indigo: #4F46E5;
+  --color-semantic-green: #14A800;
+
+  --font-inter: var(--font-inter);
+}
+
+:root {
+  --background: #FFFFFF;
+  --foreground: #3C4043;
+  --card: #FFFFFF;
+  --card-foreground: #3C4043;
+  --popover: #FFFFFF;
+  --popover-foreground: #3C4043;
+  --primary: #14A800;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F1FAF0;
+  --secondary-foreground: #14A800;
+  --muted: #F3F4F6;
+  --muted-foreground: #6B7280;
+  --accent: #F1FAF0;
+  --accent-foreground: #14A800;
+  --destructive: #DC2626;
+  --destructive-foreground: #FFFFFF;
+  --border: #E5E7EB;
+  --input: #E5E7EB;
+  --ring: #14A800;
+  --radius: 0.75rem;
+}
+
+body {
+  background-color: #FFFFFF;
+  color: #3C4043;
+  font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-feature-settings: "cv11", "ss01";
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #9CA3AF;
+}
+
+/* ==========================================================================
+   Smooth Slide-over Modal / Drawer Animations (GPU accelerated)
+   ========================================================================== */
+
+@keyframes sheetOverlayShow {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes sheetOverlayHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes sheetSlideInRight {
+  from {
+    transform: translate3d(100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutRight {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(100%, 0, 0);
+  }
+}
+
+@keyframes sheetSlideInLeft {
+  from {
+    transform: translate3d(-100%, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutLeft {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-100%, 0, 0);
+  }
+}
+
+@keyframes sheetSlideInTop {
+  from {
+    transform: translate3d(0, -100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutTop {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, -100%, 0);
+  }
+}
+
+@keyframes sheetSlideInBottom {
+  from {
+    transform: translate3d(0, 100%, 0);
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes sheetSlideOutBottom {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+}
+
+/* Radix Overlay states */
+[data-radix-dialog-overlay][data-state="open"] {
+  animation: sheetOverlayShow 300ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+[data-radix-dialog-overlay][data-state="closed"] {
+  animation: sheetOverlayHide 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+
+/* Radix Content states */
+[data-radix-dialog-content][data-side="right"][data-state="open"],
+[data-side="right"][data-state="open"] {
+  animation: sheetSlideInRight 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="right"][data-state="closed"],
+[data-side="right"][data-state="closed"] {
+  animation: sheetSlideOutRight 260ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="left"][data-state="open"],
+[data-side="left"][data-state="open"] {
+  animation: sheetSlideInLeft 360ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="left"][data-state="closed"],
+[data-side="left"][data-state="closed"] {
+  animation: sheetSlideOutLeft 260ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="top"][data-state="open"],
+[data-side="top"][data-state="open"] {
+  animation: sheetSlideInTop 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="top"][data-state="closed"],
+[data-side="top"][data-state="closed"] {
+  animation: sheetSlideOutTop 240ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="bottom"][data-state="open"],
+[data-side="bottom"][data-state="open"] {
+  animation: sheetSlideInBottom 320ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform;
+}
+
+[data-radix-dialog-content][data-side="bottom"][data-state="closed"],
+[data-side="bottom"][data-state="closed"] {
+  animation: sheetSlideOutBottom 240ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  will-change: transform;
+}
+
