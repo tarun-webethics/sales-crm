@@ -7,7 +7,6 @@ import {
   ChevronUp,
   ExternalLink,
   Star,
-  AlertCircle,
   Clock,
   Calendar,
   Award,
@@ -16,7 +15,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { Job, JobStatus } from "@/types/job";
-import { Checkbox } from "@/components/ui/checkbox";
 import { TableRow, TableCell } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,6 +33,8 @@ interface JobRowProps {
   job: Job;
   isSelected: boolean;
   isFiltersOpen?: boolean;
+  isExpanded?: boolean;
+  onToggleExpand?: () => void;
   onToggleSelect: (id: string) => void;
   onStatusChange: (id: string, status: JobStatus) => void;
 }
@@ -119,20 +119,30 @@ export function JobRow({
   job,
   isSelected,
   isFiltersOpen = false,
+  isExpanded: controlledExpanded,
+  onToggleExpand,
   onToggleSelect,
   onStatusChange,
 }: JobRowProps) {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [showBreakdown, setShowBreakdown] = useState(true);
+  const [internalExpanded, setInternalExpanded] = useState(false);
+  const isExpanded =
+    controlledExpanded !== undefined ? controlledExpanded : internalExpanded;
+
+  const [showBreakdown, setShowBreakdown] = useState(false);
   const [selectedModel, setSelectedModel] = useState<"chatgpt" | "claude">(
     "chatgpt",
   );
   const [isProposalOpen, setIsProposalOpen] = useState(false);
-  const [markStatus, setMarkStatus] = useState<string>(
-    job.status === "Applied" ? "Applied" : "Not Applied",
-  );
 
   const details = getDetailedJobInfo(job);
+
+  const handleToggle = () => {
+    if (onToggleExpand) {
+      onToggleExpand();
+    } else {
+      setInternalExpanded((prev) => !prev);
+    }
+  };
 
   const handleRowClick = (e: React.MouseEvent<HTMLTableRowElement>) => {
     // Prevent expanding if the user clicked an interactive control
@@ -142,7 +152,7 @@ export function JobRow({
     ) {
       return;
     }
-    setIsExpanded((prev) => !prev);
+    handleToggle();
   };
 
   return (
@@ -159,14 +169,14 @@ export function JobRow({
         )}
       >
         {/* 0. Expand Chevron Toggle */}
-        <TableCell className="w-8 pl-3.5 pr-0 py-2 border-b border-slate-100">
+        <TableCell className="w-9 pl-3.5 pr-0 py-2 border-b border-slate-100">
           <button
             type="button"
             onClick={(e) => {
               e.stopPropagation();
-              setIsExpanded((prev) => !prev);
+              handleToggle();
             }}
-            className="p-1 rounded-md text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+            className="p-1 rounded-md text-black hover:text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
             aria-label={
               isExpanded
                 ? `Collapse details for ${job.title}`
@@ -177,25 +187,13 @@ export function JobRow({
             <ChevronRight
               className={cn(
                 "h-4 w-4 transition-transform duration-300 ease-in-out",
-                isExpanded ? "rotate-90 text-blue-600" : "rotate-0 text-slate-400",
+                isExpanded ? "rotate-90 text-blue-600" : "rotate-0 text-black",
               )}
             />
           </button>
         </TableCell>
 
-        {/* 1. Checkbox */}
-        <TableCell
-          className="w-9 px-1 py-2 border-b border-slate-100"
-          onClick={(e) => e.stopPropagation()}
-        >
-          <Checkbox
-            checked={isSelected}
-            onCheckedChange={() => onToggleSelect(job.id)}
-            aria-label={`Select job ${job.title}`}
-          />
-        </TableCell>
-
-        {/* 2. JOB TITLE (Clicking triggers accordion directly) */}
+        {/* 1. JOB TITLE (Clicking triggers accordion directly) */}
         <TableCell
           className={cn(
             "px-3.5 py-2 transition-all duration-300 border-b border-slate-100",
@@ -230,9 +228,9 @@ export function JobRow({
                     type="button"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsExpanded((prev) => !prev);
+                      handleToggle();
                     }}
-                    className="text-xs text-slate-900 font-medium hover:text-blue-600 transition-colors truncate block text-left min-w-0 flex-1 cursor-pointer"
+                    className="text-[13px] text-slate-900 transition-colors truncate block text-left min-w-0 flex-1 cursor-pointer"
                   >
                     {job.title}
                   </button>
@@ -269,7 +267,7 @@ export function JobRow({
         <TableCell className="whitespace-nowrap px-3.5 py-2 border-b border-slate-100">
           <div className="flex items-baseline gap-1">
             <span className="text-xs text-slate-800">{job.budgetAmount}</span>
-            <span className="text-[10px] text-slate-400 uppercase font-medium">{job.budgetType}</span>
+            <span className="text-[10px] text-black uppercase font-medium">{job.budgetType}</span>
           </div>
         </TableCell>
 
@@ -297,12 +295,7 @@ export function JobRow({
         >
           <StatusSelect
             status={job.status}
-            onStatusChange={(newStatus) => {
-              onStatusChange(job.id, newStatus);
-              setMarkStatus(
-                newStatus === "Applied" ? "Applied" : "Not Applied",
-              );
-            }}
+            onStatusChange={(newStatus) => onStatusChange(job.id, newStatus)}
           />
         </TableCell>
       </TableRow>
@@ -314,7 +307,7 @@ export function JobRow({
           isExpanded ? "border-b border-slate-100" : "border-b-0",
         )}
       >
-        <TableCell colSpan={9} className="p-0">
+        <TableCell colSpan={8} className="p-0">
           <div
             className={cn(
               "grid transition-all duration-300 ease-in-out",
@@ -324,16 +317,17 @@ export function JobRow({
             )}
           >
             <div className="overflow-hidden">
-              <div className="p-4 sm:p-5 bg-slate-50/40 border-t border-slate-100 space-y-5">
-                {/* 1. TOP FIT CHECK BANNER CONTAINER */}
+              <div className="p-5 sm:p-7 lg:p-8 bg-slate-50/40 border-t border-slate-100 space-y-6 sm:space-y-7">
+                {/* 1. AI FITCHECK BREAKDOWN CARD */}
                 <div className="rounded-xl border border-slate-200/80 bg-white overflow-hidden shadow-2xs">
                   {/* Top Bar Header */}
-                  <div className="px-4 py-3 bg-slate-50/50 flex flex-wrap items-center justify-between gap-3 border-b border-slate-100">
+                  <div
+                    className={cn(
+                      "px-4 py-3 bg-slate-50/50 flex flex-wrap items-center justify-between gap-3 transition-colors",
+                      showBreakdown && "border-b border-slate-100",
+                    )}
+                  >
                     <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs">
-                      <span className="font-semibold text-[11px] uppercase tracking-wider text-slate-500">
-                        FIT CHECK
-                      </span>
-
                       {/* Client Score Dynamic SVG Circle & Label */}
                       <div className="flex items-center gap-2">
                         <CircularScore
@@ -390,12 +384,6 @@ export function JobRow({
                           </span>
                         </div>
                       </div>
-
-                      {/* Warning Notice with icon */}
-                      <div className="flex items-center gap-1.5 text-xs text-slate-600">
-                        <AlertCircle className="h-3.5 w-3.5 text-red-500 shrink-0" />
-                        <span>{details.fitCheck.warningMessage}</span>
-                      </div>
                     </div>
 
                     {/* Hide / Show breakdown button */}
@@ -409,7 +397,7 @@ export function JobRow({
                       </span>
                       <ChevronUp
                         className={cn(
-                          "h-3.5 w-3.5 text-slate-400 transition-transform duration-200",
+                          "h-3.5 w-3.5 text-black transition-transform duration-200",
                           !showBreakdown && "rotate-180",
                         )}
                       />
@@ -436,17 +424,13 @@ export function JobRow({
                               size={44}
                               strokeWidth={3.5}
                             />
-                            <div className="space-y-1 min-w-0 flex-1">
+                            <div className="space-y-1.5 min-w-0 flex-1">
                               <div className="flex items-center gap-2">
                                 <span className="font-bold text-sm text-slate-900">
                                   Client score
                                 </span>
-                                <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold border border-blue-200 text-blue-700 bg-blue-50/70">
-                                  Confidence{" "}
-                                  {details.clientScoreCard.confidence}
-                                </span>
                               </div>
-                              <p className="text-xs text-slate-600 leading-relaxed">
+                              <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200/80 rounded-md px-2 py-1 leading-relaxed">
                                 {details.clientScoreCard.summary}
                               </p>
                             </div>
@@ -462,7 +446,7 @@ export function JobRow({
                                 >
                                   <span className="w-36 text-slate-600 truncate flex items-center gap-1">
                                     <span>{metric.label}</span>
-                                    <span className="text-slate-400 text-[10px] cursor-help">
+                                    <span className="text-black text-[10px] cursor-help">
                                       ⓘ
                                     </span>
                                   </span>
@@ -500,21 +484,13 @@ export function JobRow({
                                 size={44}
                                 strokeWidth={3.5}
                               />
-                              <div className="space-y-1 min-w-0">
+                              <div className="space-y-1.5 min-w-0 flex-1">
                                 <div className="flex items-center gap-2">
                                   <span className="font-bold text-sm text-slate-900">
                                     Job score
                                   </span>
-                                  <span
-                                    className={cn(
-                                      "px-2 py-0.5 rounded text-[10px] font-semibold border",
-                                      details.jobScoreCard.verdictBadgeClass,
-                                    )}
-                                  >
-                                    {details.jobScoreCard.verdict}
-                                  </span>
                                 </div>
-                                <p className="text-xs text-slate-600 leading-relaxed">
+                                <p className="text-xs text-amber-900 bg-amber-50 border border-amber-200/80 rounded-md px-2 py-1 leading-relaxed">
                                   {details.jobScoreCard.summary}
                                 </p>
                               </div>
@@ -559,7 +535,7 @@ export function JobRow({
                                 >
                                   <span className="w-36 text-slate-600 truncate flex items-center gap-1">
                                     <span>{metric.label}</span>
-                                    <span className="text-slate-400 text-[10px] cursor-help">
+                                    <span className="text-black text-[10px] cursor-help">
                                       ⓘ
                                     </span>
                                   </span>
@@ -582,7 +558,7 @@ export function JobRow({
                             )}
                           </div>
 
-                          <p className="text-[11px] text-slate-400 italic">
+                          <p className="text-[11px] text-black italic">
                             {details.jobScoreCard.footnote}
                           </p>
                         </div>
@@ -591,161 +567,137 @@ export function JobRow({
                   </div>
                 </div>
 
-                {/* 2. JOB DESCRIPTION TEXT */}
-                <div className="space-y-4 text-xs text-[#0F172A] leading-relaxed">
-                  <p className=" text-[#0F172A] leading-relaxed">
-                    {details.description.intro}
-                  </p>
-
-                  <div className="space-y-1.5 pt-1">
-                    <p className="font-bold text-[#000000]">
-                      {details.description.bulletsTitle}
+                {/* 2. JOB DETAILS CARD (Spacious & Breathable Layout) */}
+                <div className="bg-white space-y-7">
+                  {/* Job Description Text */}
+                  <div className="space-y-5 max-w-4xl text-[13px] sm:text-sm text-slate-700 leading-relaxed sm:leading-6">
+                    {/* Intro paragraph */}
+                    <p className="text-slate-800 leading-relaxed sm:leading-6">
+                      {details.description.intro}
                     </p>
-                    <ul className="space-y-1.5 pl-1">
-                      {details.description.bullets.map((bullet, bIdx) => (
-                        <li
-                          key={bIdx}
-                          className="flex items-start gap-2 text-[#0F172A]"
-                        >
-                          <span className="text-black font-bold">•</span>
-                          <span className="">{bullet}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
 
-                  <div className="space-y-2 pt-2 text-xs text-[#0F172A]">
-                    {details.description.outro.map((paragraph, oIdx) => (
-                      <p key={oIdx} className=" leading-relaxed">
-                        {paragraph}
+                    {/* Bullets List */}
+                    <div className="space-y-3 pt-1">
+                      <p className="font-semibold text-slate-900 text-xs sm:text-[13px] tracking-tight">
+                        {details.description.bulletsTitle}
                       </p>
-                    ))}
-                  </div>
-                </div>
-
-                {/* 3. SKILLS & EXPERTISE PILLS */}
-                <div className="flex flex-wrap gap-1.5 pt-1">
-                  {details.skills.map((skill) => {
-                    const isHighlighted = skill === details.highlightSkill;
-                    return (
-                      <span
-                        key={skill}
-                        className={cn(
-                          "px-2.5 py-1 rounded-full text-xs border transition-colors shadow-2xs",
-                          isHighlighted
-                            ? "bg-amber-50 text-amber-800 border-amber-200 font-semibold"
-                            : "bg-white text-slate-700 border-slate-200 hover:bg-slate-50",
-                        )}
-                      >
-                        {skill}
-                      </span>
-                    );
-                  })}
-                </div>
-
-                {/* 4. METADATA SPECIFICATIONS ROW WITH ICONS */}
-                <div className="space-y-1.5 pt-1">
-                  <div className="flex flex-wrap items-center gap-4 text-xs text-slate-600">
-                    <div className="inline-flex items-center gap-1.5">
-                      <Clock className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{details.specs.workload}</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5">
-                      <Calendar className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{details.specs.duration}</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5">
-                      <Award className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{details.specs.experienceLevel}</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5">
-                      <Briefcase className="h-3.5 w-3.5 text-slate-400" />
-                      <span>{details.specs.projectType}</span>
-                    </div>
-
-                    <div className="inline-flex items-center gap-1.5">
-                      <History className="h-3.5 w-3.5 text-slate-400" />
-                      <button
-                        type="button"
-                        onClick={() =>
-                          alert(`Viewing client history for ${job.title}`)
-                        }
-                        className="underline decoration-dotted hover:text-slate-900 cursor-pointer"
-                      >
-                        Client&apos;s Work History (
-                        {details.specs.historyProjectsCount} projects)
-                      </button>
-                    </div>
-                  </div>
-
-                  <p className="text-[11px] text-slate-400">
-                    {details.specs.categoryBreadcrumb}
-                  </p>
-                </div>
-
-                {/* 5. BOTTOM ACTION TOOLBAR */}
-                <div className="pt-4 border-t border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                  {/* Left: Mark as statuses (Applied, Not Applied, Not Relevant) */}
-                  <div className="flex flex-wrap items-center gap-4 text-xs">
-                    <span className="font-semibold text-slate-800">Mark as:</span>
-                    {(["Applied", "Not Applied", "Not Relevant"] as const).map(
-                      (status) => {
-                        const isChecked = markStatus === status;
-                        return (
-                          <label
-                            key={status}
-                            onClick={(e) => e.stopPropagation()}
-                            className="inline-flex items-center gap-1.5 cursor-pointer text-slate-600 hover:text-slate-900 select-none"
+                      <ul className="space-y-2.5 pl-0.5">
+                        {details.description.bullets.map((bullet, bIdx) => (
+                          <li
+                            key={bIdx}
+                            className="flex items-start gap-3 text-slate-700 leading-relaxed"
                           >
-                            <Checkbox
-                              checked={isChecked}
-                              onCheckedChange={() => {
-                                setMarkStatus(status);
-                                if (
-                                  status === "Applied" ||
-                                  status === "Not Applied"
-                                ) {
-                                  onStatusChange(job.id, status);
-                                }
-                              }}
-                            />
-                            <span
-                              className={cn(
-                                isChecked
-                                  ? "font-semibold text-slate-900"
-                                  : "text-slate-600",
-                              )}
-                            >
-                              {status}
-                            </span>
-                          </label>
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-slate-400 mt-2 shrink-0" />
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+
+                    {/* Outro paragraphs */}
+                    <div className="space-y-3 pt-2 text-slate-700 leading-relaxed sm:leading-6">
+                      {details.description.outro.map((paragraph, oIdx) => {
+                        const isNote = paragraph.toLowerCase().startsWith('note:');
+                        return isNote ? (
+                          <div
+                            key={oIdx}
+                            className="mt-3.5 p-3 rounded-lg bg-slate-50 border border-slate-200/80 text-xs sm:text-[13px] text-slate-600 font-medium leading-normal"
+                          >
+                            {paragraph}
+                          </div>
+                        ) : (
+                          <p key={oIdx}>{paragraph}</p>
                         );
-                      },
-                    )}
+                      })}
+                    </div>
                   </div>
 
-                  {/* Right: Actions */}
-                  <div className="flex flex-wrap items-center gap-2.5">
+                  {/* 3. SKILLS & EXPERTISE PILLS */}
+                  <div className="pt-6 border-t border-slate-100 space-y-3">
+                    <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider block">
+                      Skills & Expertise
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {details.skills.map((skill) => {
+                        const isHighlighted = skill === details.highlightSkill;
+                        return (
+                          <span
+                            key={skill}
+                            className={cn(
+                              "px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors shadow-2xs",
+                              isHighlighted
+                                ? "bg-amber-50 text-amber-800 border-amber-200 font-semibold shadow-xs"
+                                : "bg-slate-50/70 hover:bg-white text-slate-700 border-slate-200/90",
+                            )}
+                          >
+                            {skill}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* 4. METADATA SPECIFICATIONS ROW WITH ICONS */}
+                  <div className="pt-5 border-t border-slate-100 space-y-3">
+                    <div className="flex flex-wrap items-center gap-x-7 gap-y-3 text-xs text-slate-600">
+                      <div className="inline-flex items-center gap-2">
+                        <Clock className="h-4 w-4 text-slate-400 shrink-0" />
+                        <span className="font-medium text-slate-700">{details.specs.workload}</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-2">
+                        <Calendar className="h-4 w-4 text-slate-400 shrink-0" />
+                        <span className="font-medium text-slate-700">{details.specs.duration}</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-2">
+                        <Award className="h-4 w-4 text-slate-400 shrink-0" />
+                        <span className="font-medium text-slate-700">{details.specs.experienceLevel}</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-2">
+                        <Briefcase className="h-4 w-4 text-slate-400 shrink-0" />
+                        <span className="font-medium text-slate-700">{details.specs.projectType}</span>
+                      </div>
+
+                      <div className="inline-flex items-center gap-2">
+                        <History className="h-4 w-4 text-slate-400 shrink-0" />
+                        <button
+                          type="button"
+                          onClick={() =>
+                            alert(`Viewing client history for ${job.title}`)
+                          }
+                          className="font-medium text-slate-700 hover:text-slate-900 underline decoration-slate-300 hover:decoration-slate-600 underline-offset-4 transition-colors cursor-pointer"
+                        >
+                          Client&apos;s Work History ({details.specs.historyProjectsCount} projects)
+                        </button>
+                      </div>
+                    </div>
+
+                    <p className="text-[11px] text-slate-400 font-medium">
+                      {details.specs.categoryBreadcrumb}
+                    </p>
+                  </div>
+
+                  {/* 5. BOTTOM ACTION TOOLBAR */}
+                  <div className="pt-5 border-t border-slate-100 flex items-center justify-end gap-3">
                     {/* Generate Proposal */}
                     <Button
                       onClick={() => setIsProposalOpen(true)}
-                      className="h-9 px-3.5 gap-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
+                      className="inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 shadow-2xs transition-colors cursor-pointer"
                     >
-                      <Sparkles className="h-3.5 w-3.5" />
+                      <Sparkles className="h-3.5 w-3.5 text-blue-600" />
                       <span>Generate Proposal</span>
                     </Button>
 
-                    {/* Open project */}
+                    {/* Open project on Upwork */}
                     <a
                       href={job.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 h-9 px-3.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 shadow-2xs transition-colors"
+                      className="inline-flex items-center gap-2 h-9 px-4 rounded-lg border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 shadow-2xs transition-colors cursor-pointer"
                     >
-                      <span>Open project</span>
+                      <span>Upwork</span>
                       <ExternalLink className="h-3.5 w-3.5 text-slate-400" />
                     </a>
                   </div>

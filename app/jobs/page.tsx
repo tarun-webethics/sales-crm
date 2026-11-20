@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo, useTransition } from 'react';
-import { mockJobs } from '@/data/jobs';
+import { mockJobs, generateMoreJobs } from '@/data/jobs';
 import { Job, JobStatus, SortField, SortDirection, FilterState } from '@/types/job';
 import {
   filterJobs,
@@ -10,6 +10,7 @@ import {
   exportJobsToCSV,
 } from '@/lib/filters';
 import { JobsHeader } from '@/components/jobs/JobsHeader';
+import { JobsToolbar } from '@/components/jobs/JobsToolbar';
 import { JobsFilters } from '@/components/jobs/JobsFilters';
 import { JobsTable } from '@/components/jobs/JobsTable';
 import { cn } from '@/lib/utils';
@@ -20,13 +21,12 @@ export default function JobsPage() {
   const [sortField, setSortField] = useState<SortField>('savedDate');
   const [sortDirection, setSortDirection] = useState<SortDirection>('desc');
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(15);
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
+  const [isLoadingMore, setIsLoadingMore] = useState<boolean>(false);
   const [showFilters, setShowFilters] = useState<boolean>(false);
   const [, startTransition] = useTransition();
 
-  // Filtered and sorted jobs computation
+  // Filtered and sorted jobs computation (all jobs loaded)
   const filteredJobs = useMemo(() => {
     return filterJobs(jobs, filters);
   }, [jobs, filters]);
@@ -35,20 +35,13 @@ export default function JobsPage() {
     return sortJobs(filteredJobs, sortField, sortDirection);
   }, [filteredJobs, sortField, sortDirection]);
 
-  const paginatedJobs = useMemo(() => {
-    const start = (currentPage - 1) * pageSize;
-    return sortedJobs.slice(start, start + pageSize);
-  }, [sortedJobs, currentPage, pageSize]);
-
   // Handlers
   const handleFilterChange = (newFilters: FilterState) => {
     setFilters(newFilters);
-    setCurrentPage(1);
   };
 
   const handleResetFilters = () => {
     setFilters(initialFilterState);
-    setCurrentPage(1);
   };
 
   const handleToggleFilters = () => {
@@ -71,17 +64,17 @@ export default function JobsPage() {
   };
 
   const handleToggleSelectAll = () => {
-    const currentPageIds = paginatedJobs.map((j) => j.id);
-    const allCurrentSelected = currentPageIds.every((id) =>
+    const allVisibleIds = sortedJobs.map((j) => j.id);
+    const allCurrentSelected = allVisibleIds.every((id) =>
       selectedIds.includes(id)
     );
 
     if (allCurrentSelected) {
       setSelectedIds((prev) =>
-        prev.filter((id) => !currentPageIds.includes(id))
+        prev.filter((id) => !allVisibleIds.includes(id))
       );
     } else {
-      setSelectedIds((prev) => Array.from(new Set([...prev, ...currentPageIds])));
+      setSelectedIds((prev) => Array.from(new Set([...prev, ...allVisibleIds])));
     }
   };
 
@@ -124,27 +117,30 @@ export default function JobsPage() {
     }, 800);
   };
 
-  const handleFetchCreamJobs = () => {
-    setFilters((prev) => ({ ...prev, cream: 'Cream only' }));
-    setCurrentPage(1);
-    handleRefresh();
+  const handleLoadMore = () => {
+    if (isLoadingMore) return;
+    setIsLoadingMore(true);
+    setTimeout(() => {
+      startTransition(() => {
+        const nextBatch = generateMoreJobs(jobs.length, 15);
+        setJobs((prev) => [...prev, ...nextBatch]);
+        setIsLoadingMore(false);
+      });
+    }, 600);
   };
 
-  const handleFetchJobs = () => {
+  const handleFetchCreamJobs = () => {
+    setFilters((prev) => ({
+      ...prev,
+      cream: prev.cream === 'Cream only' ? 'All' : 'Cream only',
+    }));
     handleRefresh();
   };
 
   return (
     <div className="space-y-6 w-full">
       {/* Page Header */}
-      <JobsHeader
-        onExportCSV={handleExportCSV}
-        onRefresh={handleRefresh}
-        isRefreshing={isRefreshing}
-        totalCount={54499}
-        showFilters={showFilters}
-        onToggleFilters={handleToggleFilters}
-      />
+      <JobsHeader />
 
       {/* Main Content with Left Filters Sidebar */}
       <div className="flex flex-col lg:flex-row items-start w-full">
@@ -168,8 +164,6 @@ export default function JobsPage() {
               filters={filters}
               onFilterChange={handleFilterChange}
               onReset={handleResetFilters}
-              onFetchJobs={handleFetchJobs}
-              onFetchCreamJobs={handleFetchCreamJobs}
               resultCount={filteredJobs.length}
               totalCount={jobs.length}
               onClose={() => setShowFilters(false)}
@@ -177,10 +171,23 @@ export default function JobsPage() {
           </div>
         </aside>
 
-        {/* Jobs Table Card (smoothly expands full width when filters are hidden) */}
-        <div className="flex-1 min-w-0 w-full transition-all duration-300 ease-in-out">
+        {/* Jobs Table Column (smoothly expands full width when filters are hidden) */}
+        <div className="flex-1 min-w-0 w-full transition-all duration-300 ease-in-out space-y-3">
+          {/* Toolbar Row Above the Table */}
+          <JobsToolbar
+            isFiltersOpen={showFilters}
+            onToggleFilters={handleToggleFilters}
+            search={filters.search}
+            onSearchChange={(val) => handleFilterChange({ ...filters, search: val })}
+            onFetchCreamJobs={handleFetchCreamJobs}
+            onRefresh={handleRefresh}
+            isRefreshing={isRefreshing}
+            isCreamActive={filters.cream === 'Cream only'}
+          />
+
+          {/* Table Card */}
           <JobsTable
-            jobs={paginatedJobs}
+            jobs={sortedJobs}
             totalFilteredCount={filteredJobs.length}
             isLoading={isRefreshing}
             selectedIds={selectedIds}
@@ -194,11 +201,10 @@ export default function JobsPage() {
             sortField={sortField}
             sortDirection={sortDirection}
             onSortChange={handleSortChange}
-            currentPage={currentPage}
-            pageSize={pageSize}
-            onPageChange={setCurrentPage}
-            onPageSizeChange={setPageSize}
             onResetFilters={handleResetFilters}
+            onLoadMore={handleLoadMore}
+            isLoadingMore={isLoadingMore}
+            hasMore={true}
           />
         </div>
       </div>

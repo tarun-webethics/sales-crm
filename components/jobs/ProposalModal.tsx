@@ -17,7 +17,6 @@ import {
 import {
   Sheet,
   SheetContent,
-  SheetHeader,
   SheetTitle,
   SheetDescription,
 } from '@/components/ui/sheet';
@@ -270,7 +269,7 @@ Best,
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent
         side="right"
-        className="w-full sm:max-w-[560px] md:max-w-[590px] p-0 flex flex-col bg-white overflow-hidden shadow-2xl border-l border-[#E5E7EB] z-50 focus:outline-none"
+        className="w-full sm:max-w-[560px] md:max-w-[590px] p-0 flex flex-col h-full bg-white overflow-hidden shadow-2xl border-l border-[#E5E7EB] z-50 focus:outline-none"
       >
         {/* Accessible Header Title & Description (Hidden for screen readers if custom header is used) */}
         <div className="sr-only">
@@ -349,12 +348,12 @@ Best,
           </div>
         )}
 
-        {/* 2. BODY CONTENT (SCROLLABLE) */}
-        <div className="flex-1 overflow-y-auto px-6 py-5 bg-white">
+        {/* 2. BODY CONTENT */}
+        <div className="flex-1 min-h-0 px-6 py-4 bg-white flex flex-col">
           {activeTab === 'cover-letter' ? (
-            <div className="flex flex-col gap-4">
+            <div className="flex-1 min-h-0 flex flex-col gap-3">
               {/* MODEL SELECTOR CARDS */}
-              <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#CBD5E1]">
+              <div className="grid grid-cols-2 gap-3 pb-3 border-b border-[#CBD5E1] shrink-0">
                 {/* ChatGPT Card */}
                 <button
                   type="button"
@@ -362,8 +361,8 @@ Best,
                   className={cn(
                     'p-2.5 rounded-lg flex items-center gap-2.5 text-left transition-all cursor-pointer relative',
                     activeModel === 'chatgpt'
-                      ? 'bg-[#EFF6FF]/60 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#2563eb]'
-                      : 'hover:bg-slate-50'
+                      ? 'bg-slate-50 after:absolute after:bottom-[-13px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]'
+                      : 'hover:bg-slate-50 opacity-80 hover:opacity-100'
                   )}
                 >
                   <div className="w-6 h-6 rounded-full bg-[#EFF6FF] border border-[#BFDBFE] flex items-center justify-center shrink-0">
@@ -373,7 +372,7 @@ Best,
                     <div className="text-xs font-bold text-[#0F172A] leading-none">
                       ChatGPT
                     </div>
-                    <div className="text-[10px] text-[#2563eb] font-medium mt-1 flex items-center gap-1">
+                    <div className="text-[10px] text-[#64748B] font-medium mt-1 flex items-center gap-1">
                       <span>GPT-5</span>
                       <span>·</span>
                       <span>Ready</span>
@@ -410,7 +409,7 @@ Best,
               </div>
 
               {/* VARIANT TOGGLE & WORD COUNT ROW */}
-              <div className="flex items-center justify-between pt-1">
+              <div className="flex items-center justify-between pt-1 shrink-0">
                 {/* Segmented Pill: Original vs Improved */}
                 <div className="bg-[#F1F5F9] p-0.5 rounded-lg inline-flex items-center gap-1">
                   <button
@@ -440,44 +439,45 @@ Best,
                   </button>
                 </div>
 
-                {/* Word Count Indicator */}
-                <div className="text-xs text-[#334155] font-medium">
-                  {activeModel === 'chatgpt' ? 'GPT-5' : 'Claude'} · {wordCount} words
+                {/* Right: Word Count & Copy Button */}
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xs text-[#334155] font-medium">
+                    {activeModel === 'chatgpt' ? 'GPT-5' : 'Claude'} · {wordCount} words
+                  </span>
+                  <button
+                    type="button"
+                    onClick={handleCopyProposal}
+                    title="Copy to clipboard"
+                    className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs font-medium text-slate-600 hover:text-[#0F172A] hover:bg-slate-100 transition-colors cursor-pointer"
+                  >
+                    {copiedProposal ? (
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-[#16A34A]">
+                        <Check className="h-3.5 w-3.5" />
+                        <span>Copied</span>
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 text-[11px]">
+                        <Copy className="h-3.5 w-3.5" />
+                        <span>Copy</span>
+                      </span>
+                    )}
+                  </button>
                 </div>
               </div>
 
-              {/* PROPOSAL TEXT CARD */}
-              <div className="relative rounded-xl border border-[#CBD5E1] bg-white p-5 shadow-xs transition-shadow hover:border-slate-400">
-                {/* Top Right Copy Button */}
-                <button
-                  type="button"
-                  onClick={handleCopyProposal}
-                  title="Copy to clipboard"
-                  className="absolute right-3.5 top-3.5 p-1.5 rounded-md text-black hover:text-[#0F172A] hover:bg-slate-100 transition-colors cursor-pointer"
-                >
-                  {copiedProposal ? (
-                    <div className="inline-flex items-center gap-1 text-[11px] font-bold text-[#16A34A]">
-                      <Check className="h-3.5 w-3.5" />
-                      <span>Copied</span>
-                    </div>
-                  ) : (
-                    <Copy className="h-3.5 w-3.5" />
-                  )}
-                </button>
-
-                {/* Editable Proposal Content */}
+              {/* PROPOSAL TEXTAREA (FULL HEIGHT, NO BORDER, NO PADDING, AUTO-SCROLL) */}
+              <div className="flex-1 min-h-0 pt-2 flex flex-col">
                 <textarea
                   value={proposalText}
                   onChange={(e) => setProposalText(e.target.value)}
-                  rows={14}
-                  className="w-full bg-transparent border-0 p-0 text-xs text-[#0F172A] leading-relaxed resize-none focus:outline-none focus:ring-0 font-medium selection:bg-blue-100"
+                  className="w-full flex-1 min-h-0 bg-transparent border-0 p-0 text-xs text-[#0F172A] leading-relaxed resize-none focus:outline-none focus:ring-0 font-medium selection:bg-blue-100 overflow-y-auto"
                   placeholder="Your proposal will appear here..."
                 />
               </div>
             </div>
           ) : (
             /* TAB 2: SHARE DOCUMENT VIEW */
-            <div className="flex flex-col gap-6">
+            <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-6 pr-1">
               {/* Explainer */}
               <div>
                 <p className="text-xs text-[#334155] font-medium leading-relaxed">
@@ -664,9 +664,9 @@ Best,
           )}
         </div>
 
-        {/* 3. FOOTER TOOLBAR (Keeps ONLY ⟳ Regenerate, excludes crossed-out buttons) */}
+        {/* 3. FOOTER TOOLBAR (Keeps ONLY ⟳ Regenerate, always stuck to bottom) */}
         {activeTab === 'cover-letter' && (
-          <div className="px-6 py-3.5 border-t border-[#CBD5E1] bg-white flex items-center justify-center shrink-0">
+          <div className="px-6 py-3.5 border-t border-[#CBD5E1] bg-white flex items-center justify-center shrink-0 mt-auto sticky bottom-0 z-10">
             <button
               type="button"
               onClick={handleRegenerate}

@@ -36,8 +36,8 @@ export function RatingBadges({
         <span className="font-semibold opacity-90">{verdictScore}%</span>
       </span>
 
-      {/* Model Badges */}
-      {modelScores.map((m, idx) => {
+      {/* Model Badges (Keep 1 model badge so total is 2 badges in AI rating column) */}
+      {modelScores.slice(0, 1).map((m, idx) => {
         let modelBadgeClass = 'bg-[#EEF2FF] text-[#4F46E5] border-[#C7D2FE]';
 
         if (m.model === 'C') {
