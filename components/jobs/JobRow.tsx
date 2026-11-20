@@ -570,7 +570,7 @@ export function JobRow({
                 {/* 2. JOB DETAILS CARD (Spacious & Breathable Layout) */}
                 <div className="bg-white space-y-7">
                   {/* Job Description Text */}
-                  <div className="space-y-5 max-w-4xl text-[13px] sm:text-sm text-slate-700 leading-relaxed sm:leading-6">
+                  <div className="space-y-5 max-w-4xl text-[13px] text-xs text-slate-700 leading-relaxed sm:leading-6">
                     {/* Intro paragraph */}
                     <p className="text-slate-800 leading-relaxed sm:leading-6">
                       {details.description.intro}
@@ -578,7 +578,7 @@ export function JobRow({
 
                     {/* Bullets List */}
                     <div className="space-y-3 pt-1">
-                      <p className="font-semibold text-slate-900 text-xs sm:text-[13px] tracking-tight">
+                      <p className="font-semibold text-slate-900 text-xs tracking-tight">
                         {details.description.bulletsTitle}
                       </p>
                       <ul className="space-y-2.5 pl-0.5">
